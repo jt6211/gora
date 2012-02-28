@@ -342,7 +342,11 @@ public class AccumuloStore<K,T extends Persistent> extends DataStoreBase<K,T> {
   @Override
   public void createSchema() throws IOException {
     try {
-      conn.tableOperations().create(mapping.tableName);
+
+      if(!conn.tableOperations().exists(mapping.tableName))
+      {
+	  conn.tableOperations().create(mapping.tableName);
+      }
       Set<Entry<String,String>> es = mapping.tableConfig.entrySet();
       for (Entry<String,String> entry : es) {
         conn.tableOperations().setProperty(mapping.tableName, entry.getKey(), entry.getValue());
