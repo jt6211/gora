@@ -767,7 +767,7 @@ public class AccumuloStore<K,T extends Persistent> extends DataStoreBase<K,T> {
     } else if (clazz.equals(Double.TYPE) || clazz.equals(Double.class)) {
       return fromBytes(encoder, clazz, encoder.lastPossibleKey(8, er));
     } else if (clazz.equals(String.class)) {
-      throw new UnsupportedOperationException();
+      return fromBytes(encoder, clazz, er);
     } else if (clazz.equals(Utf8.class)) {
       return fromBytes(encoder, clazz, er);
     }
@@ -799,7 +799,7 @@ public class AccumuloStore<K,T extends Persistent> extends DataStoreBase<K,T> {
     } else if (clazz.equals(Double.TYPE) || clazz.equals(Double.class)) {
       return fromBytes(encoder, clazz, encoder.followingKey(8, per));
     } else if (clazz.equals(String.class)) {
-      throw new UnsupportedOperationException();
+      return fromBytes(encoder, clazz, Arrays.copyOf(per, per.length + 1));
     } else if (clazz.equals(Utf8.class)) {
       return fromBytes(encoder, clazz, Arrays.copyOf(per, per.length + 1));
     }
