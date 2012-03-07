@@ -422,6 +422,10 @@ public class AccumuloStore<K,T extends Persistent> extends DataStoreBase<K,T> {
 
       Field field = fieldMap.get(fieldName);
 
+      if (field == null) {
+          continue;
+      }
+
       switch (field.schema().getType()) {
         case MAP:
           currentMap = new StatefulHashMap();
@@ -469,6 +473,9 @@ public class AccumuloStore<K,T extends Persistent> extends DataStoreBase<K,T> {
     fields = getFieldsToQuery(fields);
     for (String field : fields) {
       Pair<Text,Text> col = mapping.fieldMap.get(field);
+      if (col == null) {
+        continue;
+      }
       if (col.getSecond() == null) {
         scanner.fetchColumnFamily(col.getFirst());
       } else {
@@ -516,6 +523,9 @@ public class AccumuloStore<K,T extends Persistent> extends DataStoreBase<K,T> {
       
       Object o = val.get(i);
       Pair<Text,Text> col = mapping.fieldMap.get(field.name());
+      if (col == null) {
+        continue;
+      }
 
       switch (field.schema().getType()) {
         case MAP:
